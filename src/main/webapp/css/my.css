@@ -1,0 +1,30 @@
+.players-table {
+    border: 1px solid black;
+}
+
+.header-cell {
+    border: 1px solid black;
+    min-width: 80px;
+    padding: 5px;
+}
+
+.cell {
+    border: 1px solid;
+}
+
+.cell_small {
+    min-width: auto;
+}
+
+.cell-auto {
+    width: auto;
+}
+
+.edit-image, .delete-image {
+    width: 40px;
+    height: 40px;
+}
+
+.active-pagination-button {
+    color: chocolate;
+}
