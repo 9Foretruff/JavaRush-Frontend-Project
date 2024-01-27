@@ -27,13 +27,13 @@ function fillTable(pageNumber, pageSize) {
                     <td class="cell"> ${player.birthday}</td>
                     <td class="cell"> ${player.banned}</td>
                     <td class="cell cell-auto"> 
-                        <button class="edit-button">
+                        <button class="edit-button" value="${player.id}">
                             <img class="edit-image" src="../img/edit.png" alt="edit">
                         </button>
                     </td>
                     
                     <td class="cell"> 
-                        <button class="delete-button">
+                        <button class="delete-button" value="${player.id}">
                             <img class="delete-image" src="../img/delete.png" alt="delete">
                         </button>
                     </td>
@@ -44,6 +44,11 @@ function fillTable(pageNumber, pageSize) {
 
         $playersTableBody.insertAdjacentHTML('beforeend', htmlRows)
 
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(button => button.addEventListener('click',removeAccountHandler))
+
+        const editButtons = document.querySelectorAll('.edit-button');
+        editButtons.forEach(button => button.addEventListener('click',editAccountHandler))
     })
 
 }
@@ -112,4 +117,21 @@ function setActiveButton(buttonIndex = 0){
 
     $currentActiveButton.classList.remove('active-pagination-button')
     $targetButton.classList.add('active-pagination-button')
+}
+
+function removeAccountHandler(e){
+    const accountId = e.currentTarget.value;
+
+    $.ajax({
+        url: `/rest/players/${accountId}`,
+        type: 'DELETE',
+        success: function (){
+            updatePlayersCount()
+            fillTable(currentPageNumber,accountPerPage)
+        }
+    })
+}
+
+function editAccountHandler(e){
+    const accountId = e.currentTarget.value;
 }
