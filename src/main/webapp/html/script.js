@@ -3,6 +3,10 @@ let accountPerPage = 3;
 let accountsAmount = null;
 let currentPageNumber = 0;
 
+const RACE_ARRAY = ['HUMAN', 'DWARF', 'ELF', 'GIANT', 'ORC', 'TROLL', 'HOBBIT'];
+const PROFESSION_ARRAY = ['WARRIOR', 'ROGUE', 'SORCERER', 'CLERIC', 'PALADIN', 'NAZGUL', 'WARLOCK', 'DRUID'];
+const BANNED_ARRAY = ['true', 'false']
+
 createAccountPerPageDropDown()
 fillTable(currentPageNumber, accountPerPage)
 updatePlayersCount()
@@ -87,13 +91,6 @@ function createAccountPerPageDropDown() {
     $dropDown.insertAdjacentHTML('afterbegin', options)
 }
 
-function createSelectOptions(optionsArray, defaultValue) {
-    let optionHtml = '';
-
-    optionsArray.forEach(option => optionHtml += `<option ${defaultValue === option && 'selected'} value="${option}">${option}</option>`)
-
-    return optionHtml
-}
 
 function onAccountPerPageChangeHandler(e) {
     accountPerPage = e.currentTarget.value;
@@ -132,6 +129,21 @@ function removeAccountHandler(e) {
     })
 }
 
+function updateAccount({accountId,data}){
+    $.ajax({
+        url: `/rest/players/${accountId}`,
+        type: 'POST',
+        data: JSON.stringify(data),
+        dataType: "json",
+        contentType:"application/json",
+        success: function () {
+            updatePlayersCount()
+            fillTable(currentPageNumber, accountPerPage)
+        }
+    })
+}
+
+
 function editAccountHandler(e) {
     const accountId = e.currentTarget.value;
 
@@ -147,11 +159,25 @@ function editAccountHandler(e) {
 
     $currentImage.src = "../img/save.png"
 
+    $currentImage.addEventListener('click',()=>{
+        const params = {
+            accountId : accountId,
+            data : {
+                name: $currentName.childNodes[0].getAttribute('data-value'),
+                title: $currentTitle.childNodes[0].getAttribute('data-value'),
+                race: $currentRace.childNodes[0].getAttribute('data-value'),
+                profession: $currentProfession.childNodes[0].getAttribute('data-value'),
+                banned: $currentBanned.childNodes[0].getAttribute('data-value'),
+            }
+        }
+        updateAccount(params)
+    })
+
     $currentName.childNodes[0].replaceWith(createInput($currentName.innerHTML))
     $currentTitle.childNodes[0].replaceWith(createInput($currentTitle.innerHTML))
-    $currentRace.childNodes[0].replaceWith(createInput($currentRace.innerHTML))
-    $currentProfession.childNodes[0].replaceWith(createInput($currentProfession.innerHTML))
-    $currentBanned.childNodes[0].replaceWith(createInput($currentBanned.innerHTML))
+    $currentRace.childNodes[0].replaceWith(createSelect(RACE_ARRAY, $currentRace.innerHTML))
+    $currentProfession.childNodes[0].replaceWith(createSelect(PROFESSION_ARRAY, $currentProfession.innerHTML))
+    $currentBanned.childNodes[0].replaceWith(createSelect(BANNED_ARRAY, $currentBanned.innerHTML))
 }
 
 
@@ -168,4 +194,28 @@ function createInput(value) {
 
     return $htmlInputElement
 
+}
+
+function createSelect(optionsArray, defaultValue) {
+    const $options = createSelectOptions(optionsArray, defaultValue);
+    const $selectElement = document.createElement('select');
+
+    $selectElement.insertAdjacentHTML('afterbegin', $options)
+
+    $selectElement.setAttribute('data-value', defaultValue)
+
+    $selectElement.addEventListener('change', e => {
+        $selectElement.setAttribute('data-value',e.currentTarget.value)
+    })
+
+    return $selectElement
+
+}
+
+function createSelectOptions(optionsArray, defaultValue) {
+    let optionHtml = '';
+
+    optionsArray.forEach(option => optionHtml += `<option ${defaultValue === option && 'selected'} value="${option}">${option}</option>`)
+
+    return optionHtml
 }
