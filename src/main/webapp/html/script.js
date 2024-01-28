@@ -13,7 +13,7 @@ updatePlayersCount()
 
 function fillTable(pageNumber, pageSize) {
 
-    $.get(`http://localhost:8084/rest/players?pageNumber=${pageNumber}&pageSize=${pageSize}`, (players) => {
+    $.get(`http://localhost:8080/rest/players?pageNumber=${pageNumber}&pageSize=${pageSize}`, (players) => {
         console.log(players)
 
         const $playersTableBody = $('.players-table-body')[0];
@@ -129,13 +129,13 @@ function removeAccountHandler(e) {
     })
 }
 
-function updateAccount({accountId,data}){
+function updateAccount({accountId, data}) {
     $.ajax({
         url: `/rest/players/${accountId}`,
         type: 'POST',
         data: JSON.stringify(data),
         dataType: "json",
-        contentType:"application/json",
+        contentType: "application/json",
         success: function () {
             updatePlayersCount()
             fillTable(currentPageNumber, accountPerPage)
@@ -159,17 +159,19 @@ function editAccountHandler(e) {
 
     $currentImage.src = "../img/save.png"
 
-    $currentImage.addEventListener('click',()=>{
+    $currentImage.addEventListener('click', () => {
         const params = {
-            accountId : accountId,
-            data : {
+            accountId: accountId,
+            data: {
                 name: $currentName.childNodes[0].getAttribute('data-value'),
                 title: $currentTitle.childNodes[0].getAttribute('data-value'),
                 race: $currentRace.childNodes[0].getAttribute('data-value'),
                 profession: $currentProfession.childNodes[0].getAttribute('data-value'),
                 banned: $currentBanned.childNodes[0].getAttribute('data-value'),
             }
-        }
+        };
+
+        console.log(params)
         updateAccount(params)
     })
 
@@ -205,7 +207,7 @@ function createSelect(optionsArray, defaultValue) {
     $selectElement.setAttribute('data-value', defaultValue)
 
     $selectElement.addEventListener('change', e => {
-        $selectElement.setAttribute('data-value',e.currentTarget.value)
+        $selectElement.setAttribute('data-value', e.currentTarget.value)
     })
 
     return $selectElement
@@ -215,7 +217,9 @@ function createSelect(optionsArray, defaultValue) {
 function createSelectOptions(optionsArray, defaultValue) {
     let optionHtml = '';
 
-    optionsArray.forEach(option => optionHtml += `<option ${defaultValue === option && 'selected'} value="${option}">${option}</option>`)
+    optionsArray.forEach(option => optionHtml += `<option ${defaultValue === option && 'selected'} value="${option}">
+        ${option}
+        </option>`)
 
     return optionHtml
 }
