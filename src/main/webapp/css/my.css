@@ -1,0 +1,72 @@
+.players-table {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+.cell {
+    border: 2px solid black;
+    padding: 10px;
+}
+
+.header-row {
+    background-color: chocolate;
+}
+
+.pagination-buttons-wrapper, .players-per-page {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.active-button {
+    color: #ffc500;
+}
+
+.button:hover {
+    background-color: chocolate;
+    cursor: pointer;
+}
+
+.button {
+    margin: 8px;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.create-field {
+    margin: 10px;
+}
+
+#create-name-input, #create-level-input {
+    margin-left: 80px;
+}
+
+#create-title-input, #create-race-select {
+    margin-left: 86px;
+}
+
+#create-profession-select {
+    margin-left: 48px;
+}
+
+#create-birthday-input, #create-banned-select {
+    margin-left: 70px;
+}
+
+.save-button {
+    margin-left: 135px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form {
+    padding: 10px;
+    width: 350px;
+    border-radius: 5px;
+    border: solid black 2px;
+    box-sizing: border-box;
+}

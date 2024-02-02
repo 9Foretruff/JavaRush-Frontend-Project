@@ -1,0 +1,80 @@
+<html lang="eng">
+<head>
+    <title>RPG</title>
+    <script src=https://code.jquery.com/jquery-3.6.0.min.js></script>
+    <link href="../css/my.css" rel="stylesheet">
+    <script defer src="/html/script.js" type="text/javascript"></script>
+</head>
+<body>
+<h1>RPG admin panel</h1>
+<h2>Accounts list:</h2>
+
+<div class="players-per-page">
+    <label for="accounts-per-page">Count per page: </label>
+    <select class="accounts-per-page" id="accounts-per-page"></select>
+</div>
+
+<table class="players-table">
+    <thead>
+    <tr class="header-row">
+        <th class="cell">#</th>
+        <th class="cell">Name</th>
+        <th class="cell">Title</th>
+        <th class="cell">Race</th>
+        <th class="cell">Profession</th>
+        <th class="cell">Level</th>
+        <th class="cell">Birthday</th>
+        <th class="cell">Banned</th>
+        <th class="cell">Edit</th>
+        <th class="cell">Delete</th>
+    </tr>
+    </thead>
+
+    <tbody class="players-table-body">
+    </tbody>
+</table>
+
+<div class="pagination-buttons-wrapper">
+    <span><b>Pages: </b></span>
+    <span class="pagination-buttons"></span>
+</div>
+
+<hr>
+
+<div class="form">
+    <h2>Create new account:</h2>
+    <div class="create-field">
+        <label for="create-name-input">Name:</label>
+        <input id="create-name-input" type="text" data-create-name>
+    </div>
+    <div class="create-field">
+        <label for="create-title-input">Title:</label>
+        <input id="create-title-input" type="text" data-create-title>
+    </div>
+    <div class="create-field">
+        <label for="create-race-select">Race:</label>
+        <select id="create-race-select" data-create-race></select>
+    </div>
+    <div class="create-field">
+        <label for="create-profession-select">Profession:</label>
+        <select id="create-profession-select" data-create-profession></select>
+    </div>
+    <div class="create-field">
+        <label for="create-level-input">Level:</label>
+        <input id="create-level-input" type="text" data-create-level>
+    </div>
+    <div>
+        <label for="create-birthday-input">Birthday:</label>
+        <input id="create-birthday-input" type="date" data-create-birthday>
+    </div>
+    <div class="create-field">
+        <label for="create-banned-select">Banned:</label>
+        <select id="create-banned-select" data-create-banned></select>
+    </div>
+    <button class="save-button" onclick="createAccount()">
+        <img class="save-image" src="../img/save.png" alt="save">
+    </button>
+</div>
+
+</body>
+</html>
